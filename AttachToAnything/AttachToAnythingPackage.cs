@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using EnvDTE;
@@ -76,7 +77,10 @@ namespace AttachToAnything {
             if (eventArgs.OutValue == IntPtr.Zero)
                 throw new ArgumentException("Out parameter can not be NULL");
 
-            Marshal.GetNativeVariantForObject(this.controller.GetAttachTargets(), eventArgs.OutValue);
+            Marshal.GetNativeVariantForObject(
+                this.controller.GetTargets().Select(t => t.DisplayName).ToArray(),
+                eventArgs.OutValue
+            );
         }
     }
 }

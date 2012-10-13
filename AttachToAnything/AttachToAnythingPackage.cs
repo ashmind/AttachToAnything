@@ -11,6 +11,7 @@ namespace AttachToAnything {
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
+    [ProvideOptionPage(typeof(AttachTargetOptionPage), "Attach To Anything", "General", 100, 120, false)]
     [Guid(GuidList.AttachToAnythingPackageString)]
     public sealed class AttachToAnythingPackage : Package {
         private AttachToAnythingController controller;
@@ -34,7 +35,8 @@ namespace AttachToAnything {
             Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this));
             base.Initialize();
 
-            this.controller = new AttachToAnythingController((DTE)GetService(typeof(DTE)));
+            var optionsPage = (AttachTargetOptionPage)this.GetDialogPage(typeof(AttachTargetOptionPage));
+            this.controller = new AttachToAnythingController((DTE)GetService(typeof(DTE)), optionsPage);
 
             // Add our command handlers for menu (commands must exist in the .vsct file)
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;

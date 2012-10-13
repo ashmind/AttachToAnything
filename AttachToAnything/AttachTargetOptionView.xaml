@@ -1,0 +1,8 @@
+﻿<Window x:Class="AttachToAnything.AttachTargetOptionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AttachTargetOptionView" Height="300" Width="300">
+  <Grid>
+    <TextBlock Text="Hello from WPF" />
+  </Grid>
+</Window>

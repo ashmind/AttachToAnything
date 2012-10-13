@@ -10,22 +10,22 @@ namespace AttachToAnything {
     public class AttachToAnythingController {
         private const string OpenDialogTarget = "<open dialog>";
 
-        private readonly IList<AttachTargetModel> targets = new List<AttachTargetModel> {
-            new AttachTargetModel("w3wp.exe",       "IIS (local)"),
-            new AttachTargetModel(OpenDialogTarget, "Other process…")
-        };
         private readonly DTE dte;
+        private readonly AttachTargetOptionPage options;
 
-        public AttachToAnythingController(DTE dte) {
+        public AttachToAnythingController(DTE dte, AttachTargetOptionPage options) {
             this.dte = dte;
+            this.options = options;
         }
 
         public IEnumerable<AttachTargetModel> GetTargets() {
-            return this.targets;
+            return this.options.Targets.Concat(new[] {
+                new AttachTargetModel(OpenDialogTarget, "Other process…")
+            });
         }
 
         public void AttachTo(string targetDisplayName) {
-            var target = this.targets.Single(t => t.DisplayName == targetDisplayName);
+            var target = this.options.Targets.Single(t => t.DisplayName == targetDisplayName);
             if (target.Target == OpenDialogTarget) {
                 dte.ExecuteCommand("Tools.AttachtoProcess");
                 return;
@@ -41,7 +41,7 @@ namespace AttachToAnything {
             }
 
             if (!found)
-                MessageBox.Show("Failed to find " + target.Target + " process.", "Attach To Anything", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Failed to find " + target.Target + ".", "Attach To Anything", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

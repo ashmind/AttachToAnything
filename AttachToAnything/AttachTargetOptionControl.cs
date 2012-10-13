@@ -53,13 +53,7 @@ namespace AttachToAnything {
         }
 
         private void listTargets_AfterLabelEdit(object sender, LabelEditEventArgs e) {
-            var index = listTargets.SelectedIndices[0];
-            if (index < this.Model.Count) {
-                this.Model[index] = e.Label;
-            }
-            else {
-                this.Model.Add(e.Label);
-            }
+            this.Model[e.Item] = e.Label;
         }
 
         private void listTargets_SelectedIndexChanged(object sender, EventArgs e) {
@@ -68,6 +62,7 @@ namespace AttachToAnything {
 
         private void buttonAdd_Click(object sender, EventArgs e) {
             listTargets.Items.Add(new ListViewItem(comboProcesses.Text));
+            this.Model.Add(comboProcesses.Text);
             comboProcesses.Text = "";
         }
 

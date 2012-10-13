@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
+using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 
 namespace AttachToAnything {
@@ -11,7 +12,7 @@ namespace AttachToAnything {
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(GuidList.AttachToAnythingPackageString)]
     public sealed class AttachToAnythingPackage : Package {
-        private readonly AttachToAnythingController controller;
+        private AttachToAnythingController controller;
 
         /// <summary>
         /// Default constructor of the package.
@@ -22,7 +23,6 @@ namespace AttachToAnything {
         /// </summary>
         public AttachToAnythingPackage() {
             Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this));
-            this.controller = new AttachToAnythingController();
         }
 
         /// <summary>
@@ -32,6 +32,8 @@ namespace AttachToAnything {
         protected override void Initialize() {
             Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this));
             base.Initialize();
+
+            this.controller = new AttachToAnythingController((DTE)GetService(typeof(DTE)));
 
             // Add our command handlers for menu (commands must exist in the .vsct file)
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
@@ -50,7 +52,16 @@ namespace AttachToAnything {
         }
 
         private void AttachToInvokeCallback(object sender, EventArgs e) {
-            throw new NotImplementedException();
+            var eventArgs = (OleMenuCmdEventArgs)e;
+
+            // requesting current value?
+            if (eventArgs.OutValue != IntPtr.Zero) {
+                Marshal.GetNativeVariantForObject("", eventArgs.OutValue);
+                return;
+            }
+
+            var target = (string)eventArgs.InValue;
+            controller.AttachTo(target);
         }
 
         private void AttachGetListInvokeCalback(object sender, EventArgs e) {

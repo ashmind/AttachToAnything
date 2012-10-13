@@ -40,8 +40,8 @@
       <Menu guid="guidAttachToAnythingCommandSet" id="Toolbar" type="Toolbar" >
         <CommandFlag>DefaultDocked</CommandFlag>
         <Strings>
-          <ButtonText>Test Toolbar</ButtonText>
-          <CommandName>Test Toolbar</CommandName>
+          <ButtonText>Attach To Anything</ButtonText>
+          <CommandName>Attach To Anything</CommandName>
         </Strings>
       </Menu>
     </Menus>

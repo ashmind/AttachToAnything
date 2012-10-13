@@ -79,10 +79,7 @@ namespace AttachToAnything {
             if (eventArgs.OutValue == IntPtr.Zero)
                 throw new ArgumentException("Out parameter can not be NULL");
 
-            Marshal.GetNativeVariantForObject(
-                this.controller.GetTargets().Select(t => t.DisplayName).ToArray(),
-                eventArgs.OutValue
-            );
+            Marshal.GetNativeVariantForObject(this.controller.GetTargets().ToArray(), eventArgs.OutValue);
         }
     }
 }

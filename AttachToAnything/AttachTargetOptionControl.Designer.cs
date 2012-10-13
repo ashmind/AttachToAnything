@@ -23,110 +23,94 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.gridTargets = new System.Windows.Forms.DataGridView();
-            this.sourceModel = new System.Windows.Forms.BindingSource(this.components);
-            this.columnDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.columnProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.columnDelete = new System.Windows.Forms.DataGridViewLinkColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.gridTargets)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sourceModel)).BeginInit();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonRemove = new System.Windows.Forms.Button();
+            this.buttonAdd = new System.Windows.Forms.Button();
+            this.listTargets = new System.Windows.Forms.ListView();
+            this.columnTarget = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // gridTargets
+            // panel1
             // 
-            this.gridTargets.AllowUserToResizeColumns = false;
-            this.gridTargets.AllowUserToResizeRows = false;
-            this.gridTargets.AutoGenerateColumns = false;
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle25.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridTargets.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle25;
-            this.gridTargets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridTargets.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.columnDisplayName,
-            this.columnProcessName,
-            this.columnDelete});
-            this.gridTargets.DataSource = this.sourceModel;
-            this.gridTargets.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridTargets.Location = new System.Drawing.Point(10, 10);
-            this.gridTargets.Name = "gridTargets";
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridTargets.RowHeadersDefaultCellStyle = dataGridViewCellStyle27;
-            this.gridTargets.RowTemplate.Height = 24;
-            this.gridTargets.Size = new System.Drawing.Size(483, 302);
-            this.gridTargets.TabIndex = 0;
-            this.gridTargets.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridTargets_CellContentClick);
+            this.panel1.Controls.Add(this.buttonRemove);
+            this.panel1.Controls.Add(this.buttonAdd);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(10, 275);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(483, 37);
+            this.panel1.TabIndex = 3;
             // 
-            // sourceModel
+            // buttonRemove
             // 
-            this.sourceModel.AllowNew = true;
-            this.sourceModel.DataSource = typeof(AttachToAnything.AttachTargetModel);
+            this.buttonRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonRemove.Enabled = false;
+            this.buttonRemove.Location = new System.Drawing.Point(87, 13);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(75, 23);
+            this.buttonRemove.TabIndex = 3;
+            this.buttonRemove.Text = "Remove";
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
             // 
-            // columnDisplayName
+            // buttonAdd
             // 
-            this.columnDisplayName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.columnDisplayName.DataPropertyName = "DisplayName";
-            this.columnDisplayName.HeaderText = "Display As";
-            this.columnDisplayName.Name = "columnDisplayName";
-            this.columnDisplayName.Width = 99;
+            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonAdd.Location = new System.Drawing.Point(0, 13);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
+            this.buttonAdd.TabIndex = 2;
+            this.buttonAdd.Text = "Add";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
-            // columnProcessName
+            // listTargets
             // 
-            this.columnProcessName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.columnProcessName.DataPropertyName = "Target";
-            this.columnProcessName.HeaderText = "Process";
-            this.columnProcessName.Name = "columnProcessName";
+            this.listTargets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnTarget});
+            this.listTargets.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listTargets.LabelEdit = true;
+            this.listTargets.Location = new System.Drawing.Point(10, 10);
+            this.listTargets.MultiSelect = false;
+            this.listTargets.Name = "listTargets";
+            this.listTargets.Size = new System.Drawing.Size(483, 265);
+            this.listTargets.TabIndex = 4;
+            this.listTargets.UseCompatibleStateImageBehavior = false;
+            this.listTargets.View = System.Windows.Forms.View.Details;
+            this.listTargets.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listTargets_AfterLabelEdit);
+            this.listTargets.SelectedIndexChanged += new System.EventHandler(this.listTargets_SelectedIndexChanged);
+            this.listTargets.Click += new System.EventHandler(this.listTargets_Click);
+            this.listTargets.Resize += new System.EventHandler(this.listTargets_Resize);
             // 
-            // columnDelete
+            // columnTarget
             // 
-            this.columnDelete.ActiveLinkColor = System.Drawing.SystemColors.ControlText;
-            this.columnDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.columnDelete.DefaultCellStyle = dataGridViewCellStyle26;
-            this.columnDelete.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.columnDelete.LinkColor = System.Drawing.SystemColors.ControlText;
-            this.columnDelete.Name = "columnDelete";
-            this.columnDelete.HeaderText = " ";
-            this.columnDelete.ReadOnly = true;
-            this.columnDelete.Text = "×";
-            this.columnDelete.ToolTipText = "Delete";
-            this.columnDelete.UseColumnTextForLinkValue = true;
-            this.columnDelete.VisitedLinkColor = System.Drawing.SystemColors.ControlText;
-            this.columnDelete.Width = 21;
+            this.columnTarget.Text = "Process Names";
+            this.columnTarget.Width = 479;
             // 
             // AttachTargetOptionControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gridTargets);
+            this.Controls.Add(this.listTargets);
+            this.Controls.Add(this.panel1);
             this.Name = "AttachTargetOptionControl";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Size = new System.Drawing.Size(503, 322);
-            ((System.ComponentModel.ISupportInitialize)(this.gridTargets)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sourceModel)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView gridTargets;
-        private System.Windows.Forms.BindingSource sourceModel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn columnDisplayName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn columnProcessName;
-        private System.Windows.Forms.DataGridViewLinkColumn columnDelete;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button buttonRemove;
+        private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.ListView listTargets;
+        private System.Windows.Forms.ColumnHeader columnTarget;
+
+
+
 
     }
 }

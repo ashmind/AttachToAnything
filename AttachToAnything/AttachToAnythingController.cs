@@ -8,7 +8,7 @@ using Process = EnvDTE.Process;
 
 namespace AttachToAnything {
     public class AttachToAnythingController {
-        private const string OpenDialogTarget = "<open dialog>";
+        private const string OpenDialogTarget = "Other…";
 
         private readonly DTE dte;
         private readonly AttachTargetOptionPage options;
@@ -18,15 +18,12 @@ namespace AttachToAnything {
             this.options = options;
         }
 
-        public IEnumerable<AttachTargetModel> GetTargets() {
-            return this.options.Targets.Concat(new[] {
-                new AttachTargetModel(OpenDialogTarget, "Other process…")
-            });
+        public IEnumerable<string> GetTargets() {
+            return this.options.Targets.Concat(new[] { OpenDialogTarget });
         }
 
-        public void AttachTo(string targetDisplayName) {
-            var target = this.options.Targets.Single(t => t.DisplayName == targetDisplayName);
-            if (target.Target == OpenDialogTarget) {
+        public void AttachTo(string target) {
+            if (target == OpenDialogTarget) {
                 dte.ExecuteCommand("Tools.AttachtoProcess");
                 return;
             }
@@ -34,14 +31,14 @@ namespace AttachToAnything {
             var found = false;
             foreach (Process process in dte.Debugger.LocalProcesses) {
                 var fileName = Path.GetFileName(process.Name);
-                if (fileName == target.Target) {
+                if (fileName == target) {
                     found = true;
                     process.Attach();
                 }
             }
 
             if (!found)
-                MessageBox.Show("Failed to find " + target.Target + ".", "Attach To Anything", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Failed to find " + target + ".", "Attach To Anything", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

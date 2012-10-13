@@ -31,7 +31,7 @@ namespace AttachToAnything {
             var found = false;
             foreach (Process process in dte.Debugger.LocalProcesses) {
                 var fileName = Path.GetFileName(process.Name);
-                if (fileName == target) {
+                if (fileName.Equals(target, StringComparison.InvariantCultureIgnoreCase)) {
                     found = true;
                     process.Attach();
                 }

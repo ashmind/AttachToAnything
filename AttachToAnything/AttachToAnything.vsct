@@ -23,9 +23,6 @@
   <!--Definition of some VSCT specific constants. In this sample we use it for the IDs inside the guidOfficeIcon group. -->
   <Extern href="msobtnid.h"/>
 
-
-
-
   <!--The Commands section is where we the commands, menus and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
   <Commands package="guidAttachToAnythingPackage">
@@ -44,6 +41,15 @@
           <CommandName>Attach To Anything</CommandName>
         </Strings>
       </Menu>
+
+      <Menu guid="guidAttachToAnythingCommandSet" id="Menu" type="Menu">
+        <Parent guid="guidAttachToAnythingCommandSet" id="ToolbarGroup"/>
+        <CommandFlag>DefaultDocked</CommandFlag>
+        <Strings>
+          <ButtonText>Attach To</ButtonText>
+          <CommandName>Attach To</CommandName>
+        </Strings>
+      </Menu>
     </Menus>
     
     
@@ -55,26 +61,26 @@
       <Group guid="guidAttachToAnythingCommandSet" id="ToolbarGroup" priority="0x0000">
         <Parent guid="guidAttachToAnythingCommandSet" id="Toolbar"/>
       </Group>
+
+      <Group guid="guidAttachToAnythingCommandSet" id="MenuGroup" priority="0x000">
+        <Parent guid="guidAttachToAnythingCommandSet" id="Menu"/>
+      </Group>
     </Groups>
     
     
     <!--Buttons section. -->
     <!--This section defines the elements the user can interact with, like a menu command or a button 
-        or combo box in a toolbar. -->   
-    <Combos>
-      <Combo guid="guidAttachToAnythingCommandSet" id="cmdidAttachTo" defaultWidth="150" idCommandList="cmdidAttachToGetList">
-        <Parent guid="guidAttachToAnythingCommandSet" id="ToolbarGroup" />
-        <CommandFlag>IconAndText</CommandFlag>
-        <CommandFlag>CommandWellOnly</CommandFlag>
+        or combo box in a toolbar. -->
+    <Buttons>
+      <Button guid="guidAttachToAnythingCommandSet" id="cmdidAttachToDynamicStub" type="Button">
+        <Parent guid="guidAttachToAnythingCommandSet" id="MenuGroup" />
+        <CommandFlag>DynamicItemStart</CommandFlag>
+        <CommandFlag>TextOnly</CommandFlag>
         <Strings>
-          <ButtonText>Attach To:</ButtonText>
-          <ToolTipText>Select Process</ToolTipText>
-          <CommandName>Attach To</CommandName>
-          <CanonicalName>Attach To Combo</CanonicalName>
-          <LocCanonicalName>Attach To Combo</LocCanonicalName>
+          <ButtonText>Dynamic Stub</ButtonText>
         </Strings>
-      </Combo>
-    </Combos>
+      </Button>
+    </Buttons>
    
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
     <Bitmaps>
@@ -100,8 +106,10 @@
     <GuidSymbol name="guidAttachToAnythingCommandSet" value="{65ba0228-4ea4-439d-ad77-8279243d8371}">
       <IDSymbol name="Toolbar" value="0x1000" />
       <IDSymbol name="ToolbarGroup" value="0x1050" />
-      <IDSymbol name="cmdidAttachTo" value="0x0100" />
-      <IDSymbol name="cmdidAttachToGetList" value="0x102"/>
+
+      <IDSymbol name="Menu" value="0x1300" />
+      <IDSymbol name="MenuGroup" value="0x1400" />
+      <IDSymbol name="cmdidAttachToDynamicStub" value="0x1600" />
     </GuidSymbol>
     
     <GuidSymbol name="guidImages" value="{e2aa0240-93d2-4783-b3f1-559a482004c6}" >

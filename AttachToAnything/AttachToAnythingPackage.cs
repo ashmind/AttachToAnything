@@ -4,15 +4,19 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
+using AttachToAnything.Internal;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace AttachToAnything {
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
+    [ProvideAutoLoad(UIContextGuids.NoSolution)]
+    [ProvideAutoLoad(UIContextGuids.SolutionExists)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideOptionPage(typeof(AttachTargetOptionPage), "Attach To Anything", "General", 100, 120, false)]
-    [Guid(GuidList.AttachToAnythingPackageString)]
+    [Guid(GuidList.PackageString)]
     public sealed class AttachToAnythingPackage : Package {
         private AttachToAnythingController controller;
 
@@ -43,43 +47,18 @@ namespace AttachToAnything {
             if (null == mcs)
                 return;
 
-            var attachToCommandID = new CommandID(GuidList.AttachToAnythingCommandSet, (int)PkgCmdIDList.AttachTo);
-            var attachToCommand = new OleMenuCommand(AttachToInvokeCallback, attachToCommandID) {
-                ParametersDescription = "$"
-            };
-            mcs.AddCommand(attachToCommand);
-
-            var attachToGetListCommandID = new CommandID(GuidList.AttachToAnythingCommandSet, (int)PkgCmdIDList.AttachToGetList);
-            var attachGetListCommand = new OleMenuCommand(AttachGetListInvokeCalback, attachToGetListCommandID);
-            mcs.AddCommand(attachGetListCommand);
+            var dynamicItemRootId = new CommandID(GuidList.CommandSet, (int)PkgCmdIDList.AttachToDynamicStub);
+            var dynamicMenuCommand = new DynamicMenuCommand(
+                DynamicItemInvokeCallback,
+                dynamicItemRootId,
+                index => this.controller.GetTargets().ElementAtOrDefault(index)
+            );
+            mcs.AddCommand(dynamicMenuCommand);
         }
 
-        private void AttachToInvokeCallback(object sender, EventArgs e) {
-            var eventArgs = (OleMenuCmdEventArgs)e;
-
-            // requesting current value?
-            if (eventArgs.OutValue != IntPtr.Zero) {
-                Marshal.GetNativeVariantForObject("", eventArgs.OutValue);
-                return;
-            }
-
-            var target = (string)eventArgs.InValue;
-            controller.AttachTo(target);
-        }
-
-        private void AttachGetListInvokeCalback(object sender, EventArgs e) {
-            var eventArgs = (OleMenuCmdEventArgs)e;
-
-            if (eventArgs == null)
-                return;
-
-            if (eventArgs.InValue != null)
-                throw new ArgumentException("In parameter must not be specified");
-
-            if (eventArgs.OutValue == IntPtr.Zero)
-                throw new ArgumentException("Out parameter can not be NULL");
-
-            Marshal.GetNativeVariantForObject(this.controller.GetTargets().ToArray(), eventArgs.OutValue);
+        private void DynamicItemInvokeCallback(object sender, EventArgs e) {
+            var invokedCommand = (DynamicMenuCommand)sender;
+            controller.AttachTo(invokedCommand.Text);
         }
     }
 }

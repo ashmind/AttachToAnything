@@ -6,8 +6,8 @@ This Visual Studio extension lets you do exactly two things:
 
 ![](AttachToAnything/raw/master/AttachToAnything/screenshot-toolbar.png)
 
-### Plans
-Test and enable in VS 2012.
+### Requirements
+Supports Visual Studio 2010 - 2013.
 
 ### See also
 [Visual Studio Gallery](http://visualstudiogallery.msdn.microsoft.com/83f369cf-9fac-4430-addf-fedacc0af919)

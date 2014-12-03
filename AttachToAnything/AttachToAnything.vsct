@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
-  <!--  This is the file that defines the actual layout and type of the commands.
-        It is divided in different sections (e.g. command definition, command
-        placement, ...), with each defining a specific set of properties.
-        See the comment before each section for more details about how to
-        use it. -->
-
   <!--  The VSCT compiler (the tool that translates this file into the binary 
         format that VisualStudio will consume) has the ability to run a preprocessor 
         on the vsct file; this preprocessor is (usually) the C++ preprocessor, so 
@@ -14,14 +7,11 @@
         in C++ files. Using this ability of the compiler here, we include some files 
         defining some of the constants that we will use inside the file. -->
 
-  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
+  <!-- Headers -->
   <Extern href="stdidcmd.h" />
-
-  <!--This header contains the command ids for the menus provided by the shell. -->
   <Extern href="vsshlids.h" />
-
-  <!--Definition of some VSCT specific constants. In this sample we use it for the IDs inside the guidOfficeIcon group. -->
-  <!--<Extern href="msobtnid.h" xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" />-->
+  <Extern href="vsdbgcmd.h" />
+  <Extern href="vsdebugguids.h" />
 
   <!--The Commands section is where we the commands, menus and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
@@ -34,14 +24,6 @@
     group; your package should define its own command set in order to avoid collisions  
     with command ids defined by other packages. -->
     <Menus>
-      <Menu guid="guidAttachToAnythingCommandSet" id="Toolbar" type="Toolbar">
-        <CommandFlag>DefaultDocked</CommandFlag>
-        <Strings>
-          <ButtonText>Attach To Anything</ButtonText>
-          <CommandName>Attach To Anything</CommandName>
-        </Strings>
-      </Menu>
-
       <Menu guid="guidAttachToAnythingCommandSet" id="Menu" type="Menu">
         <Parent guid="guidAttachToAnythingCommandSet" id="ToolbarGroup" />
         <CommandFlag>DefaultDocked</CommandFlag>
@@ -58,11 +40,11 @@
          group as the part of a menu contained between two lines. The parent of a group 
          must be a menu. -->
     <Groups>
-      <Group guid="guidAttachToAnythingCommandSet" id="ToolbarGroup" priority="0x0000">
-        <Parent guid="guidAttachToAnythingCommandSet" id="Toolbar" />
+      <Group guid="guidAttachToAnythingCommandSet" id="ToolbarGroup" priority="0x0700">
+        <Parent guid="guidVSDebugGroup" id="IDM_DEBUG_TOOLBAR" />
       </Group>
 
-      <Group guid="guidAttachToAnythingCommandSet" id="MenuGroup" priority="0x000">
+      <Group guid="guidAttachToAnythingCommandSet" id="MenuGroup" priority="0x0000">
         <Parent guid="guidAttachToAnythingCommandSet" id="Menu" />
       </Group>
     </Groups>

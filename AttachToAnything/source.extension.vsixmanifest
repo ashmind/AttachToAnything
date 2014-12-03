@@ -3,7 +3,8 @@
   <Identifier Id="ef909810-3edb-49c8-81a1-1f05310780c7">
     <Name>Attach To Anything</Name>
     <Author>Andrey Shchekin</Author>
-    <Version>1.0.4</Version>
+    <!-- Please keep in sync with AssemblyInfo -->
+    <Version>1.1.0</Version>
     <Description xml:space="preserve">Provides a toolbar dropdown to attach to any predefined process.</Description>
     <Locale>1033</Locale>
     <MoreInfoUrl>https://github.com/ashmind/AttachToAnything</MoreInfoUrl>

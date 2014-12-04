@@ -15,7 +15,7 @@ namespace AttachToAnything {
     [ProvideAutoLoad(UIContextGuids.NoSolution)]
     [ProvideAutoLoad(UIContextGuids.SolutionExists)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideOptionPage(typeof(AttachTargetOptionPage), "Attach To Anything", "General", 100, 120, false)]
+    [ProvideOptionPageInExistingCategory(typeof(AttachTargetOptionPage), "Debugger", "AttachToAnything", 113)]
     [Guid(GuidList.PackageString)]
     public sealed class AttachToAnythingPackage : Package {
         private AttachToAnythingController controller;

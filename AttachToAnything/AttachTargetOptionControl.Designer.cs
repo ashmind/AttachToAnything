@@ -117,6 +117,7 @@
             this.comboProcesses.Name = "comboProcesses";
             this.comboProcesses.Size = new System.Drawing.Size(415, 28);
             this.comboProcesses.TabIndex = 6;
+            this.comboProcesses.TextChanged += new System.EventHandler(this.comboProcesses_TextChanged);
             // 
             // AttachTargetOptionControl
             // 

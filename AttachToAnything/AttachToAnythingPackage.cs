@@ -18,7 +18,7 @@ namespace AttachToAnything {
     [ProvideOptionPageInExistingCategory(typeof(AttachTargetOptionPage), "Debugger", "AttachToAnything", 113)]
     [Guid(GuidList.PackageString)]
     public sealed class AttachToAnythingPackage : Package {
-        private AttachToAnythingController controller;
+        private AttachToAnythingController _controller;
 
         /// <summary>
         /// Default constructor of the package.
@@ -39,8 +39,10 @@ namespace AttachToAnything {
             Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this));
             base.Initialize();
 
-            var optionsPage = (AttachTargetOptionPage)this.GetDialogPage(typeof(AttachTargetOptionPage));
-            this.controller = new AttachToAnythingController((DTE)GetService(typeof(DTE)), optionsPage);
+            var logger = new DiagnosticLogger("ExceptionBreaker");
+
+            var optionsPage = (AttachTargetOptionPage)GetDialogPage(typeof(AttachTargetOptionPage));
+            _controller = new AttachToAnythingController((DTE)GetService(typeof(DTE)), optionsPage, new ProcessWaitSource(logger), logger);
 
             // Add our command handlers for menu (commands must exist in the .vsct file)
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
@@ -51,14 +53,14 @@ namespace AttachToAnything {
             var dynamicMenuCommand = new DynamicMenuCommand(
                 DynamicItemInvokeCallback,
                 dynamicItemRootId,
-                index => this.controller.GetTargets().ElementAtOrDefault(index)
+                index => _controller.GetTargets().ElementAtOrDefault(index)
             );
             mcs.AddCommand(dynamicMenuCommand);
         }
 
         private void DynamicItemInvokeCallback(object sender, EventArgs e) {
             var invokedCommand = (DynamicMenuCommand)sender;
-            controller.AttachTo(invokedCommand.Text);
+            _controller.AttachTo(invokedCommand.Text);
         }
     }
 }

@@ -1,0 +1,13 @@
+﻿<ui:DialogWindow x:Class="AttachToAnything.UI.WaitDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.10.0"
+    Title="Attach to Anything" SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+  <Grid Height="60" Width="300" Margin="10">
+    <TextBlock>
+      <Run Text="Waiting for " /><Run Text="{Binding ProcessName, Mode=OneWay}" FontWeight="Bold" /><Run Text=" to start…"></Run>
+    </TextBlock>
+    <Button Content="Cancel" Height="25" Width="76" HorizontalAlignment="Center" VerticalAlignment="Bottom" IsCancel="True" />
+  </Grid>
+</ui:DialogWindow>

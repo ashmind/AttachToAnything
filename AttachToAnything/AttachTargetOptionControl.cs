@@ -22,7 +22,7 @@ namespace AttachToAnything {
                 return;
 
             listTargets.Items.Clear();
-            listTargets.Items.AddRange(this.Model.Select(item => new ListViewItem { Text = item }).ToArray());
+            listTargets.Items.AddRange(Model.Select(item => new ListViewItem { Text = item }).ToArray());
 
             Task.Factory.StartNew(FillProcessesAsync);
         }

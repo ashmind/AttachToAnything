@@ -42,7 +42,7 @@ namespace AttachToAnything {
             var logger = new DiagnosticLogger("ExceptionBreaker");
 
             var optionsPage = (AttachTargetOptionPage)GetDialogPage(typeof(AttachTargetOptionPage));
-            _controller = new AttachToAnythingController((DTE)GetService(typeof(DTE)), optionsPage, new ProcessWaitSource(logger), logger);
+            _controller = new AttachToAnythingController(this, (DTE)GetService(typeof(DTE)), optionsPage, new ProcessWaitSource(logger), logger);
 
             // Add our command handlers for menu (commands must exist in the .vsct file)
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
@@ -60,7 +60,7 @@ namespace AttachToAnything {
 
         private void DynamicItemInvokeCallback(object sender, EventArgs e) {
             var invokedCommand = (DynamicMenuCommand)sender;
-            _controller.AttachTo(invokedCommand.Text);
+            _controller.Process(invokedCommand.Text);
         }
     }
 }

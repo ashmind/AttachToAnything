@@ -11,18 +11,22 @@ using AttachToAnything.Internal;
 using AttachToAnything.UI;
 using EnvDTE;
 using ExceptionBreaker.Implementation;
+using Microsoft.VisualStudio.Shell;
 using Process = EnvDTE.Process;
 
 namespace AttachToAnything {
     public class AttachToAnythingController {
-        private const string OpenDialogTarget = "Other…";
+        private const string OpenDialogTarget = "Other Process…";
+        private const string OpenOptionsTarget = "Options…";
 
+        private readonly Package _package;
         private readonly DTE _dte;
         private readonly AttachTargetOptionPage _options;
         private readonly ProcessWaitSource _waitSource;
         private readonly IDiagnosticLogger _logger;
 
-        public AttachToAnythingController(DTE dte, AttachTargetOptionPage options, ProcessWaitSource waitSource, IDiagnosticLogger logger) {
+        public AttachToAnythingController(Package package, DTE dte, AttachTargetOptionPage options, ProcessWaitSource waitSource, IDiagnosticLogger logger) {
+            _package = package;
             _dte = dte;
             _options = options;
             _waitSource = waitSource;
@@ -30,17 +34,26 @@ namespace AttachToAnything {
         }
 
         public IEnumerable<string> GetTargets() {
-            return _options.Targets.Concat(new[] { OpenDialogTarget });
+            return _options.Targets.Concat(new[] { OpenDialogTarget, OpenOptionsTarget });
         }
 
-        public void AttachTo(string processNameOrOpenDialog) {
-            if (processNameOrOpenDialog == OpenDialogTarget) {
+        public void Process(string target) {
+            if (target == OpenDialogTarget) {
                 _logger.WriteLine("Opening 'Attach to Process' dialog…");
                 _dte.ExecuteCommand("Tools.AttachtoProcess");
                 return;
             }
 
-            var processName = processNameOrOpenDialog;
+            if (target == OpenOptionsTarget) {
+                _logger.WriteLine("Opening Options page…");
+                _package.ShowOptionPage(typeof(AttachTargetOptionPage));
+                return;
+            }
+
+            AttachTo(target);
+        }
+
+        private void AttachTo(string processName) {
             var found = false;
             foreach (Process process in _dte.Debugger.LocalProcesses) {
                 var fileName = Path.GetFileName(process.Name);

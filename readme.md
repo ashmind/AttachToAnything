@@ -4,7 +4,7 @@ This Visual Studio extension lets you do exactly two things:
 
 ### Screenshot
 
-![](AttachToAnything/raw/master/AttachToAnything/screenshot-toolbar.png)
+![](AttachToAnything/screenshot-toolbar.png)
 
 ### Requirements
 Supports Visual Studio 2010 - 2013.

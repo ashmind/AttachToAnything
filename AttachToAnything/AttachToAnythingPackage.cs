@@ -39,7 +39,7 @@ namespace AttachToAnything {
             Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this));
             base.Initialize();
 
-            var logger = new DiagnosticLogger("ExceptionBreaker");
+            var logger = new DiagnosticLogger("AttachToAnything");
 
             var optionsPage = (AttachTargetOptionPage)GetDialogPage(typeof(AttachTargetOptionPage));
             _controller = new AttachToAnythingController(this, (DTE)GetService(typeof(DTE)), optionsPage, new ProcessWaitSource(logger), logger);

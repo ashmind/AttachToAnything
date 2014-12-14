@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Threading;
 using AttachToAnything.Internal;
 using AttachToAnything.UI;
@@ -17,7 +15,6 @@ using Process = EnvDTE.Process;
 namespace AttachToAnything {
     public class AttachToAnythingController {
         private const string OpenDialogTarget = "Other Process…";
-        private const string OpenOptionsTarget = "Options…";
 
         private readonly Package _package;
         private readonly DTE _dte;
@@ -34,23 +31,22 @@ namespace AttachToAnything {
         }
 
         public IEnumerable<string> GetTargets() {
-            return _options.Targets.Concat(new[] { OpenDialogTarget, OpenOptionsTarget });
+            return _options.Targets.Concat(new[] { OpenDialogTarget });
         }
 
-        public void Process(string target) {
+        public void HandleAttachTo(string target) {
             if (target == OpenDialogTarget) {
                 _logger.WriteLine("Opening 'Attach to Process' dialog…");
                 _dte.ExecuteCommand("Tools.AttachtoProcess");
                 return;
             }
-
-            if (target == OpenOptionsTarget) {
-                _logger.WriteLine("Opening Options page…");
-                _package.ShowOptionPage(typeof(AttachTargetOptionPage));
-                return;
-            }
-
+            
             AttachTo(target);
+        }
+
+        public void HandleOptions() {
+            _logger.WriteLine("Opening Options page…");
+            _package.ShowOptionPage(typeof(AttachTargetOptionPage));
         }
 
         private void AttachTo(string processName) {

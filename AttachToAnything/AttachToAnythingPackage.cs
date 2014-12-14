@@ -45,22 +45,31 @@ namespace AttachToAnything {
             _controller = new AttachToAnythingController(this, (DTE)GetService(typeof(DTE)), optionsPage, new ProcessWaitSource(logger), logger);
 
             // Add our command handlers for menu (commands must exist in the .vsct file)
-            var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (null == mcs)
+            var menuCommandService = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (null == menuCommandService)
                 return;
+            
+            SetupAttachCommand(menuCommandService);
+            SetupOptionsCommand(menuCommandService);
+        }
 
-            var dynamicItemRootId = new CommandID(GuidList.CommandSet, (int)PkgCmdIDList.AttachToDynamicStub);
+        private void SetupAttachCommand(OleMenuCommandService menuCommandService) {
+            var dynamicItemRootId = new CommandID(GuidList.Commands, (int) CommandIDs.AttachToDynamicStub);
             var dynamicMenuCommand = new DynamicMenuCommand(
-                DynamicItemInvokeCallback,
+                (sender, e) => {
+                    var invokedCommand = (DynamicMenuCommand)sender;
+                    _controller.HandleAttachTo(invokedCommand.Text);
+                },
                 dynamicItemRootId,
                 index => _controller.GetTargets().ElementAtOrDefault(index)
             );
-            mcs.AddCommand(dynamicMenuCommand);
+            menuCommandService.AddCommand(dynamicMenuCommand);
         }
 
-        private void DynamicItemInvokeCallback(object sender, EventArgs e) {
-            var invokedCommand = (DynamicMenuCommand)sender;
-            _controller.Process(invokedCommand.Text);
+        private void SetupOptionsCommand(OleMenuCommandService menuCommandService) {
+            var optionsCommandId = new CommandID(GuidList.Commands, (int)CommandIDs.Options);
+            var optionsCommand = new OleMenuCommand((sender, e) => _controller.HandleOptions(), optionsCommandId);
+            menuCommandService.AddCommand(optionsCommand);
         }
     }
 }

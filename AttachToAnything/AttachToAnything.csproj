@@ -65,7 +65,6 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
@@ -190,9 +189,7 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Images_32bit.bmp" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\Commands.png" />
     <Content Include="Resources\Package.ico" />
     <Content Include="screenshot-toolbar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
